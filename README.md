@@ -1,9 +1,5 @@
 # Advanced Harmony-Aware Music Generation Model
 
-## Overview
-
-This project implements an advanced music generation model capable of creating complex and coherent musical pieces. It utilizes a two-stage process involving a main Transformer model equipped with Harmonic Relative Positional Encoding (H-RPE) and Rotary Positional Embeddings (RoPE) to generate a musical backbone, followed by a TransformerXL-based Melody Model, also using RoPE, to generate intricate melodies conditioned on the backbone.
-
 ## Table of Contents
 
 1.  [Dataset](#dataset)
@@ -38,14 +34,15 @@ The raw data `[e.g., MIDI files]` is preprocessed into a structured format suita
 **Dataset Structure:**
 The processed data used for the **Main Transformer Model** consists of sequences representing the musical backbone. Each element in the sequence might correspond to a time step or an event, and the columns/features include:
 
-* `column_name_1`: `[Description, e.g., Token ID for chord symbol]`
-* `column_name_2`: `[Description, e.g., Token ID for rhythmic pattern]`
-* `column_name_3`: `[Description, e.g., Tempo information token]`
-* `column_name_4`: `[Description, e.g., Time signature token]`
-* `column_name_5`: `[Description, e.g., Bar/Beat position marker]`
-* `[Add other relevant columns/features]`
+* `input_ids`: `[Token IDs for chord progression]`
+* `target_id`: `[Token ID of next chord]`
+* `root_pc`: `[Root pitch class]`
+* `quality_code`: `[Chord quality code (major, minor, etc.)]`
+* `function_code`: `[Chord function code (tonic, dominant, etc.)]`
 
-*(See the [Melody Model](#input--training-data-melody-model) section for its specific dataset structure).*
+**Example:**
+```json
+{"input_ids": [30219, 23481, 30219, 38716, 33697, 38716, 30219, 32211, 30219, 23481, 30219, 38716, 33697, 38716, 30219, 38716, 32211, 38716, 33697, 38716, 36453, 38716, 33697, 38716, 32211, 38716, 30219, 30219, 23481, 40340, 38716, 30219], "target_id": 23481, "root_pc": [4, 3, 4, 11, 8, 11, 4, 6, 4, 3, 4, 11, 8, 11, 4, 11, 6, 11, 8, 11, 9, 11, 8, 11, 6, 11, 4, 4, 3, 1, 11, 4], "quality_code": [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8], "function_code": [0, 0, 0, 9, 4, 9, 0, 3, 0, 0, 0, 9, 4, 9, 0, 9, 3, 9, 4, 9, 2, 9, 4, 9, 3, 9, 0, 0, 0, 5, 9, 0]}
 
 ---
 
